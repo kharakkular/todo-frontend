@@ -1,4 +1,4 @@
-import { ADD_TODO, GET_TODOS, SET_LOADING } from "../types"
+import { ADD_TODO, GET_TODOS, SET_LOADING, TODOS_ERROR } from "../types"
 
 const initialState = {
     todos: null,
@@ -26,6 +26,12 @@ export default (state = initialState, action) => {
                 ...state,
                 loading: true
             };
+        case TODOS_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
         default:
             return {
                 ...state

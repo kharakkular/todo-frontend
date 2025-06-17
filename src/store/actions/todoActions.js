@@ -1,6 +1,6 @@
 import { GET_TODOS, SET_LOADING, TODOS_ERROR } from "../types";
 
-const HOST_URL = "http://localhost:5001"
+// const HOST_URL = "http://localhost:5001";
 
 export const getTodos = () => async (dispatch) => {
 
@@ -8,10 +8,12 @@ export const getTodos = () => async (dispatch) => {
 
         dispatch(setLoading());
 
+        throw new Error("Errorrrrrrrrrrrrrrrrrrr");
+
         setTimeout(async () => {
             const getEndpoint = "/todos";
     
-            const response = await fetch(HOST_URL+getEndpoint);
+            const response = await fetch(getEndpoint);
             const jsonRes = await response.json();
     
             dispatch({
@@ -22,10 +24,18 @@ export const getTodos = () => async (dispatch) => {
         }, 3000);
 
     } catch (error) {
-        dispatch({
-            type: TODOS_ERROR,
-            payload: error
-        });
+        console.log("Error obtained is: ", error);
+        const errorObject = setError(error);
+        dispatch(errorObject);
+    }
+}
+
+const addTodo = (todo) => async (dispatch) => {
+    try {
+        
+        dispatch();
+    } catch (error) {
+        
     }
 }
 
@@ -37,10 +47,15 @@ export const setLoading = () => async (dispatch) => {
         });
     } catch (error) {
         console.log(`setLoading error message from todoactions: ${error}`);
-        dispatch({
-            type: TODOS_ERROR,
-            payload: error
-        });
+        const errorObject = setError(error);
+        dispatch(errorObject);
     }
 
+}
+
+const setError = (errorMessage) => {
+    return {
+        type: TODOS_ERROR,
+        payload: errorMessage
+    }
 }

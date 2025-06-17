@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { getTodos } from "../store/actions/todoActions";
 
-const Todos = ( { todos, loading, getTodos }) => {
+const Todos = ( { todos, loading, getTodos, error }) => {
     const [text, setText] = useState("");
     const [allTodos, setAllTodos] = useState([]);
 
@@ -26,17 +26,18 @@ const Todos = ( { todos, loading, getTodos }) => {
 
     // 2025-06-08T21:48:04.638Z
     const handleKeyDown = (event) => {
-        // if(event.key === "Enter") {
-        //     let currentTime = new Date().toISOString();
-        //     const newTodo = {
-        //         id: allTodos.length + 1,
-        //         text: text,
-        //         completed: false,
-        //         createdAt: currentTime
-        //     }
-        //     setAllTodos([...todos, newTodo]);
-        //     setText("");
-        // }
+        if(event.key === "Enter") {
+            let currentTime = new Date().toISOString();
+            const newTodo = {
+                id: allTodos.length + 1,
+                text: text,
+                completed: false,
+                createdAt: currentTime
+            }
+
+            setAllTodos([...todos, newTodo]);
+            setText("");
+        }
     }
 
     const handleTodoChange = (todo) => {
@@ -46,6 +47,10 @@ const Todos = ( { todos, loading, getTodos }) => {
 
     if(loading) {
         return <>Loading</>
+    }
+
+    if(error) {
+        return <div>Error!!!</div>
     }
 
     // useEffect( () => {
@@ -66,7 +71,8 @@ const Todos = ( { todos, loading, getTodos }) => {
 
 const mapStateToProps = (state) => ({
     todos: state.todos,
-    loading: state.loading
+    loading: state.loading,
+    error: state.error
 });
 
 export default connect(mapStateToProps, { getTodos })(Todos);
