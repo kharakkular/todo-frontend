@@ -8,7 +8,8 @@ const Todo = ({ todo, handleTodoChange }) => {
 
     return (
         <div style={{ display: "flex" }}>
-            <h2>{todo.text}</h2> <button  onClick={completeTodoHandler}>Complete Todo</button>
+            <input type="checkbox" onClick={completeTodoHandler} /> <h2>{todo.text}</h2> 
+            <button  onClick={completeTodoHandler}>Edit</button>
         </div>
     );
 }
