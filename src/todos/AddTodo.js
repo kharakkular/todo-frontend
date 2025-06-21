@@ -16,7 +16,7 @@ const AddTodo = ({ todos, addTodo }) => {
         if(event.key === "Enter") {
             let currentTime = new Date().toISOString();
             const newTodo = {
-                id: todos.length + 1,
+                id: todos.length + 1 + "",
                 text: text,
                 completed: false,
                 createdAt: currentTime

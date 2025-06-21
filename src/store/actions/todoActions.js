@@ -14,13 +14,14 @@ export const getTodos = () => async (dispatch) => {
     
             const response = await fetch(getEndpoint);
             const jsonRes = await response.json();
-    
-            dispatch({
-                type: GET_TODOS,
-                payload: jsonRes
-            });
+            if(response.ok) {
+                dispatch({
+                    type: GET_TODOS,
+                    payload: jsonRes
+                });
+            }
 
-        }, 3000);
+        }, 1000);
 
     } catch (error) {
         console.log("Error obtained is: ", error.message);
@@ -45,10 +46,12 @@ export const addTodo = (todo) => async (dispatch) => {
         });
         const data = await response.json();
         console.log("Response from addTodo is: ", {res: data});
-        dispatch({
-            type: ADD_TODO,
-            payload: data
-        });
+        if(response.ok) {
+            dispatch({
+                type: ADD_TODO,
+                payload: data
+            });
+        }
     } catch (error) {
         const errorObject = setError(error.message);
         dispatch(errorObject);
@@ -68,11 +71,13 @@ export const deleteTodo = (id) => async (dispatch) => {
         const data = await response.json();
 
         console.log("Response from deleteTodo is: ", {res: data});
-        
-        // dispatch({
-        //     type: DELETE_TODO,
-        //     payload: id
-        // });
+        console.log("Response from deleteTodo is: ", {res: response});
+        if(response.ok) {
+            dispatch({
+                type: DELETE_TODO,
+                payload: id
+            });
+        }
     } catch (error) {
         const errorObject = setError(error.message);
         dispatch(errorObject);
