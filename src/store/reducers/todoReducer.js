@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, GET_TODOS, SET_LOADING, TODOS_ERROR } from "../types"
+import { ADD_TODO, DELETE_TODO, GET_TODOS, SET_LOADING, TODOS_ERROR, UPDATE_TODO } from "../types"
 
 const initialState = {
     todos: null,
@@ -21,6 +21,16 @@ export default (state = initialState, action) => {
                 todos: [...state.todos, action.payload],
                 loading: false
             };
+            case UPDATE_TODO:
+            const allTodos = [...state.todos];
+            let updatedTodoIndex = allTodos.findIndex(todo => todo.id === action.payload.id);
+            allTodos[updatedTodoIndex] = {...action.payload};
+            console.log("++++++++++Updated Todo value from UPDATE_TODO is: ", {allTodos});
+            return {
+                ...state,
+                loading: false,
+                todos: [...allTodos]
+            }
         case DELETE_TODO:
             return {
                 ...state,

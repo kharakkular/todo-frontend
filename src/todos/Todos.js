@@ -1,10 +1,10 @@
 import Todo from "./Todo";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getTodos, deleteTodo } from "../store/actions/todoActions";
+import { getTodos, deleteTodo, updateTodo } from "../store/actions/todoActions";
 import Loader from "../extras/Loader";
 
-const Todos = ( { todos, loading, getTodos, error, deleteTodo }) => {
+const Todos = ( { todos, loading, getTodos, error, updateTodo }) => {
     const [allTodos, setAllTodos] = useState(todos);
 
 
@@ -21,7 +21,7 @@ const Todos = ( { todos, loading, getTodos, error, deleteTodo }) => {
     }, [todos]);
 
     const handleTodoChange = (todo) => {
-        deleteTodo(todo.id);
+        updateTodo(todo);
         // const inCompleteTodos = todos.filter(t => t.id !== todo.id );
         // setAllTodos([...inCompleteTodos]);
     }
@@ -41,7 +41,7 @@ const Todos = ( { todos, loading, getTodos, error, deleteTodo }) => {
     return (
         <div>
             <ul className="collection with-header">
-                {!loading && allTodos != null && allTodos.filter(t => !t.completed ).map((val, index) => {
+                {!loading && allTodos != null && allTodos.map((val, index) => {
                     return <Todo todo={ val } handleTodoChange={handleTodoChange} key={val.id}/>
                 })}
             {/* <li class="collection-header"><h4>First Names</h4></li> */} { /* Utilizing this for naming of store types*/ }
@@ -56,4 +56,4 @@ const mapStateToProps = (state) => ({
     error: state.error
 });
 
-export default connect(mapStateToProps, { getTodos, deleteTodo })(Todos);
+export default connect(mapStateToProps, { getTodos, deleteTodo, updateTodo })(Todos);

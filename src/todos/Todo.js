@@ -1,9 +1,15 @@
+import { useEffect, useState } from "react";
 
 const Todo = ({ todo, handleTodoChange }) => {
 
-    const completeTodoHandler = (event) => {
-        const changedTodo = { ...todo, completed: true };
+    const updateTodoHandler = (event) => {
+        console.log(`Event target name: ${event.target.value}`);
+        const changedTodo = { ...todo, completed: !todo.completed };
         handleTodoChange(changedTodo);
+    }
+
+    const deleteTodoHandler = (event) => {
+        console.log("Event target name: ", {target: event.target});
     }
 
     return (
@@ -13,11 +19,11 @@ const Todo = ({ todo, handleTodoChange }) => {
         // </div>
         <li className="collection-item">
             <label>
-                <input type="checkbox" />
+                <input name="completed" type="checkbox" checked={todo.completed} onChange={updateTodoHandler}/>
                 <span>{todo.text}</span>
             </label>
-            <a href="#!" className="secondary-content" onClick={completeTodoHandler}>
-                <i className="material-icons">delete</i>
+            <a href="#!" name="delete" className="secondary-content" >
+                <i name="delete" className="material-icons" onClick={deleteTodoHandler}>delete</i>
             </a>
         </li>
     );

@@ -1,5 +1,5 @@
 import { type } from "@testing-library/user-event/dist/type";
-import { ADD_TODO, DELETE_TODO, GET_TODOS, SET_LOADING, TODOS_ERROR } from "../types";
+import { ADD_TODO, DELETE_TODO, GET_TODOS, SET_LOADING, TODOS_ERROR, UPDATE_TODO } from "../types";
 
 // const HOST_URL = "http://localhost:5001";
 
@@ -50,6 +50,38 @@ export const addTodo = (todo) => async (dispatch) => {
             dispatch({
                 type: ADD_TODO,
                 payload: data
+            });
+        }
+    } catch (error) {
+        const errorObject = setError(error.message);
+        dispatch(errorObject);
+    }
+}
+
+export const updateTodo = (todo) => async (dispatch) => {
+    try {
+        dispatch(setLoading());
+
+        console.log(`Id of the completed todo is: ${todo.id}`);
+        const updatedTodo = {
+            id: todo.id,
+            text: todo.text,
+            completed: todo.completed,
+            createdAt: todo.createdAt
+        }
+        const updateEndpoint = `/todos/${updatedTodo.id}`;
+        const response = await fetch(updateEndpoint, {
+            method: "PUT",
+            body: JSON.stringify(updatedTodo)
+        });
+        const data = await response.json();
+
+        console.log("Response from updateTodo is: ", {res: data});
+        console.log("Response from updateTodo is: ", {res: response});
+        if(response.ok) {
+            dispatch({
+                type: UPDATE_TODO,
+                payload: updatedTodo
             });
         }
     } catch (error) {
