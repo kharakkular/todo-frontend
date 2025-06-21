@@ -1,15 +1,16 @@
 import Todo from "./Todo";
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { getTodos } from "../store/actions/todoActions";
+import { getTodos, deleteTodo } from "../store/actions/todoActions";
+import Loader from "../extras/Loader";
 
-const Todos = ( { todos, loading, getTodos, error }) => {
-    const [text, setText] = useState("");
-    const [allTodos, setAllTodos] = useState([]);
+const Todos = ( { todos, loading, getTodos, error, deleteTodo }) => {
+    const [allTodos, setAllTodos] = useState(todos);
 
 
     // console.log("newTodoHandler: " + text);
-    console.log("Todos length: " + allTodos);
+    console.log("Alltodos value from Todos: ", {todos: allTodos});
+    console.log("Loading value from Todos: " + loading);
 
     useEffect(() => {
         getTodos();
@@ -19,38 +20,18 @@ const Todos = ( { todos, loading, getTodos, error }) => {
         setAllTodos(todos);
     }, [todos]);
 
-    const newTodoHandler = (event) => {
-        console.log("Event target value from newTodoHandler: " + event.target.value);
-        setText(event.target.value);
-    }
-
-    // 2025-06-08T21:48:04.638Z
-    const handleKeyDown = (event) => {
-        if(event.key === "Enter") {
-            let currentTime = new Date().toISOString();
-            const newTodo = {
-                id: allTodos.length + 1,
-                text: text,
-                completed: false,
-                createdAt: currentTime
-            }
-
-            setAllTodos([...todos, newTodo]);
-            setText("");
-        }
-    }
-
     const handleTodoChange = (todo) => {
-        const inCompleteTodos = todos.filter(t => t.id !== todo.id );
-        setAllTodos([...inCompleteTodos]);
+        deleteTodo(todo.id);
+        // const inCompleteTodos = todos.filter(t => t.id !== todo.id );
+        // setAllTodos([...inCompleteTodos]);
     }
 
     if(loading) {
-        return <>Loading</>
+        return <Loader />
     }
 
     if(error) {
-        return <div>Error!!!</div>
+        return <div>{error}</div>
     }
 
     // useEffect( () => {
@@ -59,12 +40,12 @@ const Todos = ( { todos, loading, getTodos, error }) => {
 
     return (
         <div>
-            <div>
-                <input type="text" placeholder="add todo" value={text} onChange={newTodoHandler} onKeyDown={handleKeyDown}/>
-            </div>
-            {!loading && allTodos != null && allTodos.filter(t => !t.completed ).map((val, index) => {
-                return <Todo todo={ val } handleTodoChange={handleTodoChange} key={val.id}/>
-            })}
+            <ul className="collection with-header">
+                {!loading && allTodos != null && allTodos.filter(t => !t.completed ).map((val, index) => {
+                    return <Todo todo={ val } handleTodoChange={handleTodoChange} key={val.id}/>
+                })}
+            {/* <li class="collection-header"><h4>First Names</h4></li> */} { /* Utilizing this for naming of store types*/ }
+            </ul>
         </div>
     );
 }
@@ -75,4 +56,4 @@ const mapStateToProps = (state) => ({
     error: state.error
 });
 
-export default connect(mapStateToProps, { getTodos })(Todos);
+export default connect(mapStateToProps, { getTodos, deleteTodo })(Todos);

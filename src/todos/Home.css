@@ -1,0 +1,12 @@
+.sideNavWidth {
+    width: 250px;
+}
+
+.page-layout {
+    display: flex;
+}
+
+.main-content {
+    padding: 20px;
+    margin-left: 250px;
+}
