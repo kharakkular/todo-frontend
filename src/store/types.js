@@ -9,3 +9,7 @@ export const GET_TODOS = "GET_TODOS";
 export const SET_LOADING = "SET_LOADING";
 
 export const TODOS_ERROR = "TODOS_ERROR";
+
+export const ACTIVE_TODOS = "ACTIVE_TODOS";
+
+export const COMPLETED_TODOS = "COMPLETED_TODOS";

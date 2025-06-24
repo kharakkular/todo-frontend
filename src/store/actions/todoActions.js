@@ -30,6 +30,29 @@ export const getTodos = () => async (dispatch) => {
     }
 }
 
+export const getActiveTodos = () => async (dispatch) => {
+
+    try {
+        
+        dispatch(setLoading());
+        const getEndpoint = "/todos";
+        const response = await fetch(getEndpoint);
+        const jsonRes = await response.json();
+        const activeTodos = jsonRes.filter(todo => !todo.completed);
+
+        if(response.ok) {
+            dispatch({
+                type: GET_TODOS,
+                payload: activeTodos
+            });
+        }
+        
+    } catch (error) {
+        const errorObject = setError(error.message);
+        dispatch(errorObject);
+    }
+}
+
 export const addTodo = (todo) => async (dispatch) => {
     try {
         

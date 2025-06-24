@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, GET_TODOS, SET_LOADING, TODOS_ERROR, UPDATE_TODO } from "../types"
+import { ACTIVE_TODOS, ADD_TODO, COMPLETED_TODOS, DELETE_TODO, GET_TODOS, SET_LOADING, TODOS_ERROR, UPDATE_TODO } from "../types"
 
 const initialState = {
     todos: null,
@@ -15,6 +15,18 @@ export default (state = initialState, action) => {
                 loading: false,
                 todos: action.payload
             };
+        case ACTIVE_TODOS:
+            return {
+                ...state,
+                todos: action.payload,
+                loading: false
+            }
+        case COMPLETED_TODOS:
+            return {
+                ...state,
+                todos: action.payload,
+                loading: false
+            }
         case ADD_TODO:
             return {
                 ...state,
