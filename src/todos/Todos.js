@@ -5,20 +5,11 @@ import { getTodos, deleteTodo, updateTodo } from "../store/actions/todoActions";
 import Loader from "../extras/Loader";
 
 const Todos = ( { todos, loading, getTodos, error, updateTodo }) => {
-    const [allTodos, setAllTodos] = useState(todos);
 
 
     // console.log("newTodoHandler: " + text);
-    console.log("Alltodos value from Todos: ", {todos: allTodos});
+    // console.log("Alltodos value from Todos: ", {todos: allTodos});
     console.log("Loading value from Todos: " + loading);
-
-    useEffect(() => {
-        getTodos();
-    }, []);
-
-    useEffect(() => {
-        setAllTodos(todos);
-    }, [todos]);
 
     const handleTodoChange = (todo) => {
         updateTodo(todo);
@@ -41,7 +32,7 @@ const Todos = ( { todos, loading, getTodos, error, updateTodo }) => {
     return (
         <div>
             <ul className="collection with-header">
-                {!loading && allTodos != null && allTodos.map((val, index) => {
+                {!loading && todos != null && todos.map((val, index) => {
                     return <Todo todo={ val } handleTodoChange={handleTodoChange} key={val.id}/>
                 })}
             {/* <li class="collection-header"><h4>First Names</h4></li> */} { /* Utilizing this for naming of store types*/ }
@@ -51,7 +42,6 @@ const Todos = ( { todos, loading, getTodos, error, updateTodo }) => {
 }
 
 const mapStateToProps = (state) => ({
-    todos: state.todos,
     loading: state.loading,
     error: state.error
 });

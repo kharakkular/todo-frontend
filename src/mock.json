@@ -1,0 +1,28 @@
+{
+  "todos": [
+    {
+      "id": "9",
+      "text": "Wake up at 5:00 am",
+      "completed": false,
+      "createdAt": "2025-06-21T01:07:36.409Z"
+    },
+    {
+      "id": "1441",
+      "text": "Run 5km",
+      "completed": false,
+      "createdAt": "2025-06-21T18:45:49.614Z"
+    },
+    {
+      "id": "e3bf",
+      "text": "Wake up at 5:30 am",
+      "completed": false,
+      "createdAt": "2025-06-24T04:14:49.280Z"
+    },
+    {
+      "id": "df18",
+      "text": "Run 25 km",
+      "completed": false,
+      "createdAt": "2025-06-24T04:15:23.282Z"
+    }
+  ]
+}
